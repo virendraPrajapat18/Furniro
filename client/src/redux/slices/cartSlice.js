@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "http://localhost:9000/api/cart";
+const API_URL = "https://furniro-p8i6.onrender.com/api/cart";
 
 // ✅ Fetch Cart
 export const fetchCart = createAsyncThunk("cart/fetchCart", async () => {
