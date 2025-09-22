@@ -3,7 +3,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "http://localhost:9000/api/products";
+const API_URL = "https://furniro-p8i6.onrender.com/api/products";
 
 // ✅ Fetch all products with pagination
 export const fetchProducts = createAsyncThunk(
