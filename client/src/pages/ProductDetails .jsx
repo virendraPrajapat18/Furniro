@@ -18,7 +18,7 @@ const ProductDetails = () => {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const res = await axios.get(`http://localhost:9000/api/products/${id}`);
+      const res = await axios.get(`https://furniro-p8i6.onrender.com/api/products/${id}`);
       setProduct(res.data);
     };
     fetchProduct();
