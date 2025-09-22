@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Menu, X, ShoppingCart, User, Search, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
-import CartSidebar from "./CartSidebar"; // import the sidebar
+import CartSidebar from "./CartSideBar"; // import the sidebar
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false); // mobile menu
