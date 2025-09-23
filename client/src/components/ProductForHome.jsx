@@ -83,13 +83,61 @@ const ProductForHome = () => {
   ];
 
   return (
-    <div className="flex flex-col justify-center items-center gap-12 py-16 px-4">
+   <div className="flex flex-col justify-center items-center gap-12 py-16 px-4">
       <h1 className="text-[36px] font-[500]">Our Products</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-        {related.map((product) => (
-          <ProductTile key={product._id} product={product} />
-        ))}
+        {related.map((product) => {
+          const discountPercentage =
+            product.salePrice && product.salePrice < product.price
+              ? Math.round(
+                  ((product.price - product.salePrice) / product.price) * 100
+                )
+              : null;
+
+          const displayPrice = product.salePrice || product.price;
+
+          return (
+            <div
+              key={product._id}
+              className="bg-white rounded-xl shadow-md overflow-hidden w-[285px] h-[446px]"
+            >
+              {/* Product Image + Discount Badge */}
+              <div className="w-full h-[301px] relative">
+                <img
+                  className="w-full h-full object-cover"
+                  src={product.image}
+                  alt={product.title}
+                />
+                {discountPercentage && (
+                  <div className="absolute top-6 right-6 w-12 h-12 bg-red-500 rounded-full text-white text-sm font-bold flex items-center justify-center">
+                    -{discountPercentage}%
+                  </div>
+                )}
+              </div>
+
+              {/* Product Details */}
+              <div className="p-4">
+                <h3 className="text-xl font-bold text-gray-800 mb-1">
+                  {product.title}
+                </h3>
+                <p className="text-sm text-gray-500 mb-2">
+                  {product.description}
+                </p>
+                <div className="flex items-baseline justify-between">
+                  <span className="text-xl font-bold text-gray-800">
+                    Rp {displayPrice.toLocaleString("id-ID")}
+                  </span>
+                  {product.salePrice && product.salePrice < product.price && (
+                    <span className="text-gray-400 text-sm line-through">
+                      Rp {product.price.toLocaleString("id-ID")}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       <Link
