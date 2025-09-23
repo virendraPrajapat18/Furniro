@@ -22,9 +22,15 @@ const ProductTile = ({ product }) => {
 
   const displayPrice = salePrice || price;
 
+  // ✅ Trim description to 7–8 words
+  const shortDescription = description
+    ? description.split(" ").slice(0, 8).join(" ") +
+      (description.split(" ").length > 8 ? "..." : "")
+    : "";
+
   // ✅ Delete product
   const handleDelete = async (e) => {
-    e.stopPropagation(); // prevent card click
+    e.stopPropagation();
     if (window.confirm("Delete this product?")) {
       await dispatch(deleteProduct(product._id)).unwrap();
       await dispatch(fetchProducts());
@@ -34,14 +40,13 @@ const ProductTile = ({ product }) => {
 
   // ✅ Navigate to product detail page
   const handleCardClick = (e) => {
-    // don’t navigate if button or modal is clicked
     if (e.target.closest("button")) return;
     navigate(`/product/${product._id}`);
   };
 
   // ✅ Add to cart
   const handleAddToCart = async (e) => {
-    e.stopPropagation(); // prevent navigation when clicking button
+    e.stopPropagation();
     await dispatch(addToCart(product._id));
     toast.success(`${product.title} added to cart 🛒`);
   };
@@ -65,7 +70,7 @@ const ProductTile = ({ product }) => {
         {/* Product Details */}
         <div className="p-4">
           <h3 className="text-xl font-bold text-gray-800 mb-1">{title}</h3>
-          <p className="text-sm text-gray-500 mb-2">{description}</p>
+          <p className="text-sm text-gray-500 mb-2">{shortDescription}</p>
           <div className="flex items-baseline justify-between">
             <span className="text-xl font-bold text-gray-800">
               Rp {displayPrice.toLocaleString("id-ID")}
@@ -80,7 +85,6 @@ const ProductTile = ({ product }) => {
 
         {/* Hover Overlay */}
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          {/* ✅ Add to cart */}
           <button
             onClick={handleAddToCart}
             className="bg-white text-[#B8860B] font-semibold py-3 px-8 rounded-md mb-4 hover:bg-gray-100 transition-colors duration-200"
@@ -88,11 +92,10 @@ const ProductTile = ({ product }) => {
             Add to cart
           </button>
 
-          {/* Update / Delete */}
           <div className="flex space-x-6">
             <button
               onClick={(e) => {
-                e.stopPropagation(); // 🔥 prevent navigation
+                e.stopPropagation();
                 setShowUpdate(true);
               }}
               className="flex items-center gap-2 text-white font-semibold py-2 px-5 rounded-lg hover:bg-yellow-600 transition"
